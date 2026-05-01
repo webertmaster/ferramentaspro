@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador CONNECTA PRO - Premium</title>
+    <title>Geradores Webflix - Premium</title>
     <style>
         :root {
             --bg-color: #121214;
@@ -95,7 +95,7 @@
 <body>
 
     <div class="container">
-        <h1>Gerador CONNECTA PRO</h1>
+        <h1>Gerador Connecta Pro</h1>
 
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('ofertas')">Ofertas</button>
@@ -105,7 +105,7 @@
             <button class="tab-btn" onclick="switchTab('novas')">Novas Msgs</button>
         </div>
 
-        <!-- ABA OFERTAS (RECUPERADA COMPLETA) -->
+        <!-- ABA OFERTAS COMPLETA -->
         <div id="secaoOfertas" class="tab-content active">
             <div class="input-group"><label>Valor do Plano (R$):</label><input type="text" id="vOferta" value="25,00"></div>
             <button class="action-btn" onclick="gerarOferta()">Gerar Oferta Completa</button>
@@ -113,17 +113,18 @@
             <button class="action-btn btn-copy" onclick="copy('resOferta')">📋 Copiar Texto</button>
         </div>
 
-        <!-- ABA COBRANÇA -->
+        <!-- ABA COBRANÇA (AGORA COM AGRADECIMENTO) -->
         <div id="secaoCobranca" class="tab-content">
             <div class="input-group"><label>Nome do Cliente:</label><input type="text" id="nCli" placeholder="Ex: João"></div>
             <div class="input-group">
-                <label>Vencimento:</label>
+                <label>Tipo de Mensagem:</label>
                 <select id="tCobranca">
-                    <option value="1">Vence Amanhã</option>
-                    <option value="0">Vence Hoje</option>
+                    <option value="1">Aviso: Vence Amanhã</option>
+                    <option value="0">Aviso: Vence Hoje</option>
+                    <option value="obrigado">🎉 Agradecimento (Renovado)</option>
                 </select>
             </div>
-            <button class="action-btn" onclick="gerarCobranca()">Gerar Cobrança</button>
+            <button class="action-btn" onclick="gerarCobranca()">Gerar Mensagem de Cobrança</button>
             <textarea id="resCobranca" style="height: 200px;" readonly></textarea>
             <button class="action-btn btn-copy" onclick="copy('resCobranca')">📋 Copiar Texto</button>
         </div>
@@ -179,7 +180,6 @@
             setTimeout(() => { btn.innerText = '📋 Copiar Texto'; }, 1500);
         }
 
-        // SUA OFERTA COMPLETA ORIGINAL
         function gerarOferta() {
             const v = document.getElementById('vOferta').value;
             document.getElementById('resOferta').value = `🍀LIBERADO + DE 100 MIL CONTEÚDOS🍀\n\n✔️CANAIS ✔️NOVELAS\n✔️FILMES  ✔️SÉRIES\n♾♾♾♾♾♾♾♾♾♾\nGRADE COM GRANDES VARIEDADES:\n\n✅ 🎬FAZENDA 2023\n✅ ⚽️ FOX SPORTS\n✅ 🏟 PREMIERE\n✅ ⚽️ CONMEBOL LIBERTADORES \n✅ 💪 UFC\n✅ 🎭 HBO\n✅ 🎬 TELECINE\n✅ 📺 ABERTOS\n✅ 👶 INFANTIS\n✅ 🍿 FILMES E SÉRIES\n✅ 🏀 ESPORTES\n✅ 🇵🇹 INTERNACIONAIS\n✅ 📽 DOCUMENTÁRIOS\n✅ 📺 24HORAS\n✅ 🕍 RELIGIOSOS\n✅ 👩 NOVELAS\n✅ 🎤 NOTÍCIAS\n✅ 🔞 ADULTOS ⚠️ (OPCIONAL) ⚠️\n\nFUNCIONA EM:\n📌 SMART TV\n📌 TV BOX\n📌 TABLETS\n📌 NOTEBOOKS/MAC\n📌 COMPUTADOR\n📌 CELULAR (IOS E ANDROID)\n\nAproveita tudo isso por apenas R$ ${v}/mês!`;
@@ -188,8 +188,15 @@
         function gerarCobranca() {
             const n = document.getElementById('nCli').value || "Cliente";
             const t = document.getElementById('tCobranca').value;
-            const msg = t === "1" ? "vence AMANHÃ!" : "vence HOJE!";
-            document.getElementById('resCobranca').value = `🔔 AVISO DE VENCIMENTO 🔔\n\nOlá, ${n}! Tudo bem?\n\nPassando para lembrar que o seu acesso ${msg} 🗓️\n\nNão deixe sua programação favorita pausar. Podemos renovar?\n\nQualquer dúvida, estamos à disposição! 🍿📺`;
+            let txt = "";
+
+            if (t === "obrigado") {
+                txt = `🎉 ACESSO RENOVADO COM SUCESSO! 🎉\n\nOlá, ${n}!\n\nSeu pagamento foi confirmado e seu acesso já está renovado por mais 30 dias. ✅\n\nMuito obrigado pela confiança e preferência. Continue aproveitando o melhor do entretenimento!\n\nBom divertimento! 🍿📺`;
+            } else {
+                const msg = t === "1" ? "vence AMANHÃ!" : "vence HOJE!";
+                txt = `🔔 AVISO DE VENCIMENTO 🔔\n\nOlá, ${n}! Tudo bem?\n\nPassando para lembrar que o seu acesso ${msg} 🗓️\n\nNão deixe sua programação favorita pausar. Podemos renovar?\n\nQualquer dúvida, estamos à disposição! 🍿📺`;
+            }
+            document.getElementById('resCobranca').value = txt;
         }
 
         function gerarPix() {
@@ -201,14 +208,14 @@
         function gerarTextoDivertido() {
             const preco = document.getElementById('pFun').value;
             const mensagens = [
-                `PARE TUDO! ✋🛑\nVocê ainda paga caro em streaming? 🤡 Por apenas ${preco} você tem TUDO o que os outros têm, sem vender um rim. 🤣\n✅ Canais, Filmes e Séries. Bora testar? 🍿📺`,
+                `PARE TUDO! ✋🛑\nVocê ainda paga caro em streaming? 🤡 Por apenas ${preco} você tem TUDO o que os outros têm. 🤣\n✅ Canais, Filmes e Séries. Bora testar? 🍿📺`,
                 `VAMOS SER SINCEROS? 🤔\nVocê só quer chegar em casa e assistir seu jogo em paz. ⚽\nPrometo a MELHOR LISTA por apenas ${preco}. Chama aqui! 👇`,
                 `Sabe o que custa ${preco}? 🤔\nUm lanche ou... UM MÊS INTEIRO de cinema! 🍔❌ 🎬✅\nA escolha é óbvia, né? Me chama!`,
-                `O VAR analisou e confirmou: ✅\nEssa é a melhor oferta de hoje! Todos os canais por apenas ${preco}. O grito de gol tá garantido! ⚽🔥`,
-                `Cansado de "links duvidosos" que travam? 🏴‍☠️❌\nTenha qualidade profissional e zero estresse por apenas ${preco}. Você merece! ✨`,
-                `Status: Com preguiça de sair, mas com vontade de ver filme. 😴🎬\nPor ${preco} eu tenho o cinema no meu sofá. Quer também? Chama aí!`,
+                `O VAR analisou e confirmou: ✅\nEssa é a melhor oferta de hoje! Todos os canais por apenas ${preco}. ⚽🔥`,
+                `Cansado de "links duvidosos" que travam? 🏴‍☠️❌\nTenha qualidade profissional e zero estresse por apenas ${preco}. ✨`,
+                `Status: Com preguiça de sair, mas com vontade de ver filme. 😴🎬\nPor ${preco} eu tenho o cinema no meu sofá. Quer também?`,
                 `Sua TV é Smart mas você só usa o YouTube? 🤡\nLiberte todos os canais e filmes por ${preco}. Transforme sua sala em um cinema! 🍿`,
-                `Se somar todos os streamings hoje, dá um aluguel! 💸\nAqui você paga ${preco} e tem TODOS em um só lugar. Economia inteligente! 🧠🚀`,
+                `Se somar todos os streamings hoje, dá um aluguel! 💸\nAqui você paga ${preco} e tem TODOS em um só lugar. 🧠🚀`,
                 `Diz o ditado: "Quem avisa amigo é". 📢\nTem muito filme bom saindo e você vai ficar de fora? Por ${preco} você assiste tudo! 🚀`,
                 `VOCÊ VIU ISSO? 😱\nO preço dos streamings subiu de novo... Mas aqui continua ${preco}! 🤫✨ Vem ver! 🍿`
             ];
