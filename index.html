@@ -194,7 +194,7 @@
             if (t === "obrigado") {
                 txt = `🎉 ACESSO RENOVADO COM SUCESSO! 🎉\n\nOlá, ${n}!\n\nSeu pagamento foi confirmado e seu acesso já está renovado por mais 30 dias. ✅\n\nMuito obrigado pela confiança e preferência. Continue aproveitando o melhor do entretenimento!\n\nBom divertimento! 🍿📺`;
             } else {
-                const msg = t === "1" ? "vence AMANHÃ!" : "vence HOJE!" : "EXPIROU!";
+                const msg = t === "1" ? "vence AMANHÃ!" : "vence HOJE!";
                 txt = `🔔 AVISO DE VENCIMENTO 🔔\n\nOlá, ${n}! Tudo bem?\n\nPassando para lembrar que o seu acesso ${msg} 🗓️\n\nNão deixe sua programação favorita pausar. Podemos renovar?\n\nQualquer dúvida, estamos à disposição! 🍿📺`;
             }
             document.getElementById('resCobranca').value = txt;
