@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geradores de Mensagem - Webflix</title>
+    <title>Gerador CONNECTA PRO - Premium</title>
     <style>
         :root {
             --bg-color: #121214;
@@ -14,19 +14,13 @@
             --border-color: #29292e;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
@@ -36,411 +30,211 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 30px;
+            padding: 25px;
             width: 100%;
             max-width: 550px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            margin-top: 20px;
         }
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #fff;
-            text-align: center;
-        }
+        h1 { font-size: 1.4rem; margin-bottom: 20px; color: #fff; text-align: center; }
 
-        /* Menu de Abas (Tabs) */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 25px;
-        }
+        .tabs { display: flex; gap: 5px; margin-bottom: 20px; flex-wrap: wrap; }
 
         .tab-btn {
             flex: 1;
-            padding: 10px 6px;
+            padding: 10px 3px;
             background-color: #29292e;
             color: #a8a8b3;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 0.85rem;
+            font-size: 0.70rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s;
+            min-width: 85px;
+            transition: 0.2s;
         }
 
-        .tab-btn.active {
-            background-color: var(--accent-color);
-            color: #fff;
-            border-color: var(--accent-color);
-        }
+        .tab-btn.active { background-color: var(--accent-color); color: #fff; }
 
-        .tab-btn:hover {
-            background-color: #323238;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .tab-content {
-            display: none;
-        }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #a8a8b3; font-size: 0.9rem; }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #a8a8b3;
-            font-size: 0.95rem;
-        }
-
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
             background-color: #09090a;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             color: #fff;
-            font-size: 1rem;
             outline: none;
-            transition: border-color 0.2s;
         }
 
-        input:focus, select:focus {
-            border-color: var(--accent-color);
-        }
+        textarea { height: 350px; margin-top: 10px; font-family: 'Segoe UI', sans-serif; font-size: 0.85rem; line-height: 1.4; }
 
-        button.action-btn {
+        .action-btn {
             width: 100%;
             padding: 14px;
             background-color: var(--accent-color);
             color: #fff;
             border: none;
             border-radius: 6px;
-            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
-            margin-bottom: 15px;
+            margin-top: 10px;
         }
 
-        button.action-btn:hover {
-            background-color: var(--accent-hover);
-        }
+        .btn-copy { background-color: #29292e; margin-top: 5px; }
+        .btn-copy:hover { background-color: #323238; }
 
-        textarea {
-            width: 100%;
-            height: 220px;
-            background-color: #09090a;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-color);
-            padding: 12px;
-            font-size: 0.95rem;
-            resize: vertical;
-            outline: none;
-            font-family: monospace;
-            margin-bottom: 15px;
-        }
-
-        textarea:focus {
-            border-color: var(--accent-color);
-        }
-
-        .btn-copy {
-            background-color: #29292e;
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-copy:hover {
-            background-color: #323238;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #7c7c8a;
-            text-align: center;
-        }
+        .footer { margin-top: 30px; font-size: 0.8rem; color: #7c7c8a; text-align: center; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>FERRAMENTAS PRO</h1>
+        <h1>Geradores Webflix</h1>
 
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('ofertas')">Gerador de Ofertas</button>
-            <button class="tab-btn" onclick="switchTab('cobranca')">Cobrança e Renovação</button>
-            <button class="tab-btn" onclick="switchTab('pix')">Gerador Pix</button>
+            <button class="tab-btn active" onclick="switchTab('ofertas')">Ofertas</button>
+            <button class="tab-btn" onclick="switchTab('cobranca')">Cobrança</button>
+            <button class="tab-btn" onclick="switchTab('pix')">Pix</button>
+            <button class="tab-btn" onclick="switchTab('fun')">Divertidos</button>
+            <button class="tab-btn" onclick="switchTab('novas')">Novas Msgs</button>
         </div>
 
+        <!-- ABA OFERTAS (RECUPERADA COMPLETA) -->
         <div id="secaoOfertas" class="tab-content active">
-            <div class="input-group">
-                <label for="valorPlanoOferta">Valor do Plano (R$):</label>
-                <input type="text" id="valorPlanoOferta" placeholder="Ex: 25,00" value="25,00">
-            </div>
-
-            <button class="action-btn" onclick="gerarTextoOferta()">Gerar Mensagem</button>
-
-            <textarea id="resultadoOferta" readonly></textarea>
-
-            <button class="action-btn btn-copy" onclick="copiarTexto('resultadoOferta', event)">📋 Copiar Texto</button>
+            <div class="input-group"><label>Valor do Plano (R$):</label><input type="text" id="vOferta" value="25,00"></div>
+            <button class="action-btn" onclick="gerarOferta()">Gerar Oferta Completa</button>
+            <textarea id="resOferta" readonly></textarea>
+            <button class="action-btn btn-copy" onclick="copy('resOferta')">📋 Copiar Texto</button>
         </div>
 
+        <!-- ABA COBRANÇA -->
         <div id="secaoCobranca" class="tab-content">
+            <div class="input-group"><label>Nome do Cliente:</label><input type="text" id="nCli" placeholder="Ex: João"></div>
             <div class="input-group">
-                <label for="nomeCliente">Nome do Cliente:</label>
-                <input type="text" id="nomeCliente" placeholder="Ex: João Silva" value="">
-            </div>
-
-            <div class="input-group">
-                <label for="valorPlanoCobranca">Valor da Mensalidade (R$):</label>
-                <input type="text" id="valorPlanoCobranca" placeholder="Ex: 25,00" value="25,00">
-            </div>
-
-            <div class="input-group">
-                <label for="nomeRevendedor">Revendedor ou Servidor (Opcional):</label>
-                <input type="text" id="nomeRevendedor" placeholder="Ex: João - Revenda ou Servidor A" value="">
-            </div>
-
-            <div class="input-group">
-                <label for="tipoMensagem">Tipo de Mensagem:</label>
-                <select id="tipoMensagem" onchange="gerarTextoCobranca()">
-                    <option value="1">Aviso: 1 dia para o vencimento</option>
-                    <option value="2">Aviso: 2 dias para o vencimento</option>
-                    <option value="3">Agradecimento: Renovação concluída</option>
+                <label>Vencimento:</label>
+                <select id="tCobranca">
+                    <option value="1">Vence Amanhã</option>
+                    <option value="0">Vence Hoje</option>
                 </select>
             </div>
-
-            <button class="action-btn" onclick="gerarTextoCobranca()">Gerar Mensagem</button>
-
-            <textarea id="resultadoCobranca" readonly></textarea>
-
-            <button class="action-btn btn-copy" onclick="copiarTexto('resultadoCobranca', event)">📋 Copiar Texto</button>
+            <button class="action-btn" onclick="gerarCobranca()">Gerar Cobrança</button>
+            <textarea id="resCobranca" style="height: 200px;" readonly></textarea>
+            <button class="action-btn btn-copy" onclick="copy('resCobranca')">📋 Copiar Texto</button>
         </div>
 
+        <!-- ABA PIX -->
         <div id="secaoPix" class="tab-content">
-            <div class="input-group">
-                <label for="chavePix">Chave Pix (E-mail, Telefone, CPF ou Aleatória):</label>
-                <input type="text" id="chavePix" placeholder="Ex: 000.111.222-33" value="">
-            </div>
+            <div class="input-group"><label>Sua Chave Pix:</label><input type="text" id="cPix" placeholder="E-mail, CPF ou Celular"></div>
+            <div class="input-group"><label>Nome do Titular:</label><input type="text" id="nPix" placeholder="Nome do Beneficiário"></div>
+            <button class="action-btn" onclick="gerarPix()">Gerar Dados de Pagamento</button>
+            <textarea id="resPix" style="height: 200px;" readonly></textarea>
+            <button class="action-btn btn-copy" onclick="copy('resPix')">📋 Copiar Texto</button>
+        </div>
 
+        <!-- ABA DIVERTIDOS -->
+        <div id="secaoFun" class="tab-content">
+            <div class="input-group"><label>Preço para o texto:</label><input type="text" id="pFun" value="R$ 25,00"></div>
+            <button class="action-btn" onclick="gerarTextoDivertido()">🎲 Sortear Texto Divertido</button>
+            <textarea id="resFun" style="height: 250px;" readonly></textarea>
+            <button class="action-btn btn-copy" onclick="copy('resFun')">📋 Copiar Texto Divertido</button>
+        </div>
+
+        <!-- ABA NOVAS MENSAGENS -->
+        <div id="secaoNovas" class="tab-content">
             <div class="input-group">
-                <label for="tipoChave">Tipo de Chave:</label>
-                <select id="tipoChave">
-                    <option value="CPF">CPF</option>
-                    <option value="E-mail">E-mail</option>
-                    <option value="Telefone">Telefone</option>
-                    <option value="Aleatória">Chave Aleatória</option>
+                <label>Selecione o Modelo:</label>
+                <select id="tipoNovas">
+                    <option value="maes">🎁 Promoção Mês das Mães</option>
+                    <option value="indicacao">👥 Indicação Premiada</option>
+                    <option value="suporte">🛠️ Suporte (Reiniciar)</option>
                 </select>
             </div>
-
-            <div class="input-group">
-                <label for="nomeBeneficiario">Nome do Beneficiário:</label>
-                <input type="text" id="nomeBeneficiario" placeholder="Ex: Webert Benes de Souza" value="">
-            </div>
-
-            <div class="input-group">
-                <label for="valorPix">Valor (R$):</label>
-                <input type="text" id="valorPix" placeholder="Ex: 25,00" value="25,00">
-            </div>
-
-            <div class="input-group">
-                <label for="identificador">Identificador / Descrição (Opcional):</label>
-                <input type="text" id="identificador" placeholder="Ex: Mensalidade João Silva" value="">
-            </div>
-
-            <button class="action-btn" onclick="gerarTextoPix()">Gerar Mensagem Pix</button>
-
-            <textarea id="resultadoPix" readonly></textarea>
-
-            <button class="action-btn btn-copy" onclick="copiarTexto('resultadoPix', event)">📋 Copiar Texto</button>
+            <button class="action-btn" onclick="gerarNovasMensagens()">Gerar Mensagem</button>
+            <textarea id="resNovas" style="height: 250px;" readonly></textarea>
+            <button class="action-btn btn-copy" onclick="copy('resNovas')">📋 Copiar Texto</button>
         </div>
 
     </div>
 
-    <div class="footer">
-        Direitos reservados CONNECTA PRO / WebertMaster
-    </div>
+    <div class="footer">Direitos reservados CONNECTA PRO / WebertMaster</div>
 
     <script>
-        // Função para alternar entre as abas
-        function switchTab(tabName) {
-            const buttons = document.querySelectorAll('.tab-btn');
-            const contents = document.querySelectorAll('.tab-content');
-
-            buttons.forEach(btn => btn.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-
-            if (tabName === 'ofertas') {
-                buttons[0].classList.add('active');
-                document.getElementById('secaoOfertas').classList.add('active');
-                gerarTextoOferta();
-            } else if (tabName === 'cobranca') {
-                buttons[1].classList.add('active');
-                document.getElementById('secaoCobranca').classList.add('active');
-                gerarTextoCobranca();
-            } else if (tabName === 'pix') {
-                buttons[2].classList.add('active');
-                document.getElementById('secaoPix').classList.add('active');
-                gerarTextoPix();
-            }
+        function switchTab(t) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('secao' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('active');
         }
 
-        // Lógica do Gerador de Ofertas
-        function gerarTextoOferta() {
-            const valor = document.getElementById('valorPlanoOferta').value;
-            const template = `🍀LIBERADO + DE 100 MIL CONTEÚDOS🍀
-
-✔️CANAIS ✔️NOVELAS
-✔️FILMES  ✔️SÉRIES
-♾♾♾♾♾♾♾♾♾♾
-GRADE COM GRANDES VARIEDADES:
-
-✅ 🎬 A FAZENDA
-✅ ⚽️ FOX SPORTS
-✅ 🏟 PREMIERE
-✅ ⚽️ CONMEBOL LIBERTADORES 
-✅ 💪 UFC
-✅ 🎭 HBO
-✅ 🎬 TELECINE
-✅ 📺 ABERTOS
-✅ 👶 INFANTIS
-✅ 🍿 FILMES E SÉRIES
-✅ 🏀 ESPORTES
-✅ 🇵🇹 INTERNACIONAIS
-✅ 📽 DOCUMENTÁRIOS
-✅ 📺 24HORAS
-✅ 🕍 RELIGIOSOS
-✅ 👩 NOVELAS
-✅ 🎤 NOTÍCIAS
-✅ 🔞 ADULTOS ⚠️ (OPCIONAL) ⚠️
-
-FUNCIONA EM:
-📌 SMART TV
-📌 TV BOX
-📌 TABLETS
-📌 NOTEBOOKS/MAC
-📌 COMPUTADOR
-📌 CELULAR (IOS E ANDROID)
-
-Aproveita tudo isso por apenas R$ ${valor}/mês!`;
-
-            document.getElementById('resultadoOferta').value = template;
-        }
-
-        // Lógica do Gerador de Cobrança e Renovação
-        function gerarTextoCobranca() {
-            const nome = document.getElementById('nomeCliente').value || "[Nome do Cliente]";
-            const valor = document.getElementById('valorPlanoCobranca').value;
-            const revendedor = document.getElementById('nomeRevendedor').value;
-            const tipo = document.getElementById('tipoMensagem').value;
-
-            let template = "";
-            let linhaRevendedor = "";
-
-            if (revendedor && revendedor.trim() !== "") {
-                linhaRevendedor = `\n\n👤 Revendedor/Servidor: ${revendedor}`;
-            }
-
-            if (tipo === "1") {
-                template = `🔔 AVISO DE VENCIMENTO 🔔
-
-Olá, ${nome}! Tudo bem? 
-
-Passando para lembrar que o seu acesso vence AMANHÃ! 🗓
-
-Não deixe sua programação favorita pausar. O valor para renovação é de apenas R$ ${valor}/mês.
-
-Qualquer dúvida, estamos à disposição para ajudar com o pagamento!${linhaRevendedor}`;
-
-            } else if (tipo === "2") {
-                template = `🔔 AVISO DE VENCIMENTO 🔔
-
-Olá, ${nome}! Tudo bem? 
-
-Passando para lembrar que o seu acesso vence em 2 DIAS! 🗓
-
-Para continuar curtindo mais de 100 mil conteúdos sem interrupções, o valor para renovação é de apenas R$ ${valor}/mês. 
-
-Confirme por aqui para mantermos seu acesso ativo!${linhaRevendedor}`;
-
-            } else if (tipo === "3") {
-                template = `🎉 PLANO RENOVADO COM SUCESSO! 🎉
-
-Olá, ${nome}! Tudo bem? 
-
-Passando para agradecer pela preferência e confirmar que seu acesso à Webflix foi renovado! ✅
-
-Agora é só continuar aproveitando:
-✔️ Canais, Filmes e Séries
-✔️ Conteúdos sem travamentos
-
-Qualquer dúvida ou suporte, estamos sempre à disposição. Tenha um ótimo entretenimento! 🍿📺${linhaRevendedor}`;
-            }
-
-            document.getElementById('resultadoCobranca').value = template;
-        }
-
-        // Lógica do Gerador Pix
-        function gerarTextoPix() {
-            const chave = document.getElementById('chavePix').value || "[Sua Chave Pix]";
-            const tipo = document.getElementById('tipoChave').value;
-            const nome = document.getElementById('nomeBeneficiario').value || "[Nome]";
-            const valor = document.getElementById('valorPix').value;
-            const identificador = document.getElementById('identificador').value;
-
-            let linhaIdentificador = "";
-            if (identificador && identificador.trim() !== "") {
-                linhaIdentificador = `\n📝 Descrição: ${identificador}`;
-            }
-
-            const template = `💳 DADOS PARA PAGAMENTO VIA PIX 💳
-
-Para efetuar o pagamento do seu acesso, siga as instruções abaixo:
-
-👤 Beneficiário: ${nome}
-🔑 Chave Pix: ${chave}
-🏷 Tipo de Chave: ${tipo}
-💰 Valor: R$ ${valor}${linhaIdentificador}
-
-👉 Como pagar:
-1. Abra o app do seu banco e acesse a área Pix.
-2. Selecione a opção "Pix Copia e Cola" ou use a chave acima.
-3. Verifique se o destinatário é ${nome}.
-4. Após o pagamento, envie o comprovante neste chat para a liberação do seu acesso.
-
-Obrigado pela preferência! 🍿📺`;
-
-            document.getElementById('resultadoPix').value = template;
-        }
-
-        // Função de Copiar Texto
-        function copiarTexto(elementId, event) {
-            const textarea = document.getElementById(elementId);
-            textarea.select();
-            document.execCommand('copy');
-
+        function copy(id) {
+            const t = document.getElementById(id); t.select(); document.execCommand('copy');
             const btn = event.target;
-            const originalText = btn.innerText;
             btn.innerText = '✅ Copiado!';
-            setTimeout(() => {
-                btn.innerText = '📋 Copiar Texto';
-            }, 2000);
+            setTimeout(() => { btn.innerText = '📋 Copiar Texto'; }, 1500);
         }
 
-        // Gera o texto automaticamente ao carregar
+        // SUA OFERTA COMPLETA ORIGINAL
+        function gerarOferta() {
+            const v = document.getElementById('vOferta').value;
+            document.getElementById('resOferta').value = `🍀LIBERADO + DE 100 MIL CONTEÚDOS🍀\n\n✔️CANAIS ✔️NOVELAS\n✔️FILMES  ✔️SÉRIES\n♾♾♾♾♾♾♾♾♾♾\nGRADE COM GRANDES VARIEDADES:\n\n✅ 🎬FAZENDA 2023\n✅ ⚽️ FOX SPORTS\n✅ 🏟 PREMIERE\n✅ ⚽️ CONMEBOL LIBERTADORES \n✅ 💪 UFC\n✅ 🎭 HBO\n✅ 🎬 TELECINE\n✅ 📺 ABERTOS\n✅ 👶 INFANTIS\n✅ 🍿 FILMES E SÉRIES\n✅ 🏀 ESPORTES\n✅ 🇵🇹 INTERNACIONAIS\n✅ 📽 DOCUMENTÁRIOS\n✅ 📺 24HORAS\n✅ 🕍 RELIGIOSOS\n✅ 👩 NOVELAS\n✅ 🎤 NOTÍCIAS\n✅ 🔞 ADULTOS ⚠️ (OPCIONAL) ⚠️\n\nFUNCIONA EM:\n📌 SMART TV\n📌 TV BOX\n📌 TABLETS\n📌 NOTEBOOKS/MAC\n📌 COMPUTADOR\n📌 CELULAR (IOS E ANDROID)\n\nAproveita tudo isso por apenas R$ ${v}/mês!`;
+        }
+
+        function gerarCobranca() {
+            const n = document.getElementById('nCli').value || "Cliente";
+            const t = document.getElementById('tCobranca').value;
+            const msg = t === "1" ? "vence AMANHÃ!" : "vence HOJE!";
+            document.getElementById('resCobranca').value = `🔔 AVISO DE VENCIMENTO 🔔\n\nOlá, ${n}! Tudo bem?\n\nPassando para lembrar que o seu acesso ${msg} 🗓️\n\nNão deixe sua programação favorita pausar. Podemos renovar?\n\nQualquer dúvida, estamos à disposição! 🍿📺`;
+        }
+
+        function gerarPix() {
+            const c = document.getElementById('cPix').value || "[CHAVE]";
+            const n = document.getElementById('nPix').value || "[NOME]";
+            document.getElementById('resPix').value = `💳 DADOS PARA PAGAMENTO PIX\n\n👤 Titular: ${n}\n🔑 Chave Pix: ${c}\n\n👉 Após realizar o pagamento, envie o comprovante aqui para a ativação imediata do seu sinal! ✅`;
+        }
+
+        function gerarTextoDivertido() {
+            const preco = document.getElementById('pFun').value;
+            const mensagens = [
+                `PARE TUDO! ✋🛑\nVocê ainda paga caro em streaming? 🤡 Por apenas ${preco} você tem TUDO o que os outros têm, sem vender um rim. 🤣\n✅ Canais, Filmes e Séries. Bora testar? 🍿📺`,
+                `VAMOS SER SINCEROS? 🤔\nVocê só quer chegar em casa e assistir seu jogo em paz. ⚽\nPrometo a MELHOR LISTA por apenas ${preco}. Chama aqui! 👇`,
+                `Sabe o que custa ${preco}? 🤔\nUm lanche ou... UM MÊS INTEIRO de cinema! 🍔❌ 🎬✅\nA escolha é óbvia, né? Me chama!`,
+                `O VAR analisou e confirmou: ✅\nEssa é a melhor oferta de hoje! Todos os canais por apenas ${preco}. O grito de gol tá garantido! ⚽🔥`,
+                `Cansado de "links duvidosos" que travam? 🏴‍☠️❌\nTenha qualidade profissional e zero estresse por apenas ${preco}. Você merece! ✨`,
+                `Status: Com preguiça de sair, mas com vontade de ver filme. 😴🎬\nPor ${preco} eu tenho o cinema no meu sofá. Quer também? Chama aí!`,
+                `Sua TV é Smart mas você só usa o YouTube? 🤡\nLiberte todos os canais e filmes por ${preco}. Transforme sua sala em um cinema! 🍿`,
+                `Se somar todos os streamings hoje, dá um aluguel! 💸\nAqui você paga ${preco} e tem TODOS em um só lugar. Economia inteligente! 🧠🚀`,
+                `Diz o ditado: "Quem avisa amigo é". 📢\nTem muito filme bom saindo e você vai ficar de fora? Por ${preco} você assiste tudo! 🚀`,
+                `VOCÊ VIU ISSO? 😱\nO preço dos streamings subiu de novo... Mas aqui continua ${preco}! 🤫✨ Vem ver! 🍿`
+            ];
+            const randomMsg = mensagens[Math.floor(Math.random() * mensagens.length)];
+            document.getElementById('resFun').value = randomMsg;
+        }
+
+        function gerarNovasMensagens() {
+            const tipo = document.getElementById('tipoNovas').value;
+            let txt = "";
+            if (tipo === 'maes') {
+                txt = `🎁 MÊS DAS MÃES: PRESENTE QUE FICA! 💖\n\nSua mãe merece o melhor do entretenimento!\n✔️ Todos os canais e filmes.\n🚀 Qualidade garantida.\n\nGaranta o presente dela! 🍿`;
+            } else if (tipo === 'indicacao') {
+                txt = `👥 INDIQUE E GANHE! 🚀\n\nPara cada amigo que indicar e assinar, você ganha +3 DIAS grátis no seu plano!\n\nQuanto mais indicar, mais assiste sem pagar! 💸✨`;
+            } else if (tipo === 'suporte') {
+                txt = `🛠️ SUPORTE RÁPIDO\n\nEstá travando? Tente:\n1️⃣ Desligue TV e Roteador da tomada.\n2️⃣ Aguarde 30 segundos e ligue.\n3️⃣ Limpe o cache do app.\n\nIsso resolve 90% dos casos! 📺`;
+            }
+            document.getElementById('resNovas').value = txt;
+        }
+
         window.onload = function() {
-            gerarTextoOferta();
-            gerarTextoCobranca();
-            gerarTextoPix();
+            gerarOferta();
+            gerarCobranca();
+            gerarPix();
+            gerarTextoDivertido();
+            gerarNovasMensagens();
         };
     </script>
 </body>
