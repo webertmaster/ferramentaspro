@@ -113,7 +113,7 @@
             <button class="action-btn btn-copy" onclick="copy('resOferta')">📋 Copiar Texto</button>
         </div>
 
-        <!-- ABA COBRANÇA (AGORA COM AGRADECIMENTO) -->
+        <!-- ABA COBRANÇA -->
         <div id="secaoCobranca" class="tab-content">
             <div class="input-group"><label>Nome do Cliente:</label><input type="text" id="nCli" placeholder="Ex: João"></div>
             <div class="input-group">
@@ -121,7 +121,7 @@
                 <select id="tCobranca">
                     <option value="1">Aviso: Vence Amanhã</option>
                     <option value="0">Aviso: Vence Hoje</option>
-                    <option value="0">Aviso: Expirou</option>
+                    <option value="expirou">❌ Aviso: Expirou</option>
                     <option value="obrigado">🎉 Agradecimento (Renovado)</option>
                 </select>
             </div>
@@ -193,6 +193,8 @@
 
             if (t === "obrigado") {
                 txt = `🎉 ACESSO RENOVADO COM SUCESSO! 🎉\n\nOlá, ${n}!\n\nSeu pagamento foi confirmado e seu acesso já está renovado por mais 30 dias. ✅\n\nMuito obrigado pela confiança e preferência. Continue aproveitando o melhor do entretenimento!\n\nBom divertimento! 🍿📺`;
+            } else if (t === "expirou") {
+                txt = `⚠️ SEU ACESSO EXPIROU! ⚠️\n\nOlá, ${n}!\n\nInformamos que seu plano venceu e o sinal foi interrompido automaticamente pelo sistema. 🚫📺\n\nPara voltar a curtir todos os canais, filmes e séries, basta realizar a renovação.\n\nEstamos aguardando você para liberar seu sinal agora mesmo! 🚀`;
             } else {
                 const msg = t === "1" ? "vence AMANHÃ!" : "vence HOJE!";
                 txt = `🔔 AVISO DE VENCIMENTO 🔔\n\nOlá, ${n}! Tudo bem?\n\nPassando para lembrar que o seu acesso ${msg} 🗓️\n\nNão deixe sua programação favorita pausar. Podemos renovar?\n\nQualquer dúvida, estamos à disposição! 🍿📺`;
