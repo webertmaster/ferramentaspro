@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geradores de Mensagem - Webflix</title>
+    <style>
+        :root {
+            --bg-color: #121214;
+            --card-bg: #1a1a1e;
+            --text-color: #e1e1e6;
+            --accent-color: #00b37e;
+            --accent-hover: #00875f;
+            --border-color: #29292e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        /* Menu de Abas (Tabs) */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 6px;
+            background-color: #29292e;
+            color: #a8a8b3;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+        }
+
+        .tab-btn:hover {
+            background-color: #323238;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #a8a8b3;
+            font-size: 0.95rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background-color: #09090a;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--accent-color);
+        }
+
+        button.action-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 15px;
+        }
+
+        button.action-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        textarea {
+            width: 100%;
+            height: 220px;
+            background-color: #09090a;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            padding: 12px;
+            font-size: 0.95rem;
+            resize: vertical;
+            outline: none;
+            font-family: monospace;
+            margin-bottom: 15px;
+        }
+
+        textarea:focus {
+            border-color: var(--accent-color);
+        }
+
+        .btn-copy {
+            background-color: #29292e;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-copy:hover {
+            background-color: #323238;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #7c7c8a;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gerador de Mensagens</h1>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('ofertas')">Gerador de Ofertas</button>
+            <button class="tab-btn" onclick="switchTab('cobranca')">Cobrança e Renovação</button>
+            <button class="tab-btn" onclick="switchTab('pix')">Gerador Pix</button>
+        </div>
+
+        <div id="secaoOfertas" class="tab-content active">
+            <div class="input-group">
+                <label for="valorPlanoOferta">Valor do Plano (R$):</label>
+                <input type="text" id="valorPlanoOferta" placeholder="Ex: 25,00" value="25,00">
+            </div>
+
+            <button class="action-btn" onclick="gerarTextoOferta()">Gerar Mensagem</button>
+
+            <textarea id="resultadoOferta" readonly></textarea>
+
+            <button class="action-btn btn-copy" onclick="copiarTexto('resultadoOferta', event)">📋 Copiar Texto</button>
+        </div>
+
+        <div id="secaoCobranca" class="tab-content">
+            <div class="input-group">
+                <label for="nomeCliente">Nome do Cliente:</label>
+                <input type="text" id="nomeCliente" placeholder="Ex: João Silva" value="">
+            </div>
+
+            <div class="input-group">
+                <label for="valorPlanoCobranca">Valor da Mensalidade (R$):</label>
+                <input type="text" id="valorPlanoCobranca" placeholder="Ex: 25,00" value="25,00">
+            </div>
+
+            <div class="input-group">
+                <label for="nomeRevendedor">Revendedor ou Servidor (Opcional):</label>
+                <input type="text" id="nomeRevendedor" placeholder="Ex: João - Revenda ou Servidor A" value="">
+            </div>
+
+            <div class="input-group">
+                <label for="tipoMensagem">Tipo de Mensagem:</label>
+                <select id="tipoMensagem" onchange="gerarTextoCobranca()">
+                    <option value="1">Aviso: 1 dia para o vencimento</option>
+                    <option value="2">Aviso: 2 dias para o vencimento</option>
+                    <option value="3">Agradecimento: Renovação concluída</option>
+                </select>
+            </div>
+
+            <button class="action-btn" onclick="gerarTextoCobranca()">Gerar Mensagem</button>
+
+            <textarea id="resultadoCobranca" readonly></textarea>
+
+            <button class="action-btn btn-copy" onclick="copiarTexto('resultadoCobranca', event)">📋 Copiar Texto</button>
+        </div>
+
+        <div id="secaoPix" class="tab-content">
+            <div class="input-group">
+                <label for="chavePix">Chave Pix (E-mail, Telefone, CPF ou Aleatória):</label>
+                <input type="text" id="chavePix" placeholder="Ex: 000.111.222-33" value="">
+            </div>
+
+            <div class="input-group">
+                <label for="tipoChave">Tipo de Chave:</label>
+                <select id="tipoChave">
+                    <option value="CPF">CPF</option>
+                    <option value="E-mail">E-mail</option>
+                    <option value="Telefone">Telefone</option>
+                    <option value="Aleatória">Chave Aleatória</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="nomeBeneficiario">Nome do Beneficiário:</label>
+                <input type="text" id="nomeBeneficiario" placeholder="Ex: Webert Benes de Souza" value="">
+            </div>
+
+            <div class="input-group">
+                <label for="valorPix">Valor (R$):</label>
+                <input type="text" id="valorPix" placeholder="Ex: 25,00" value="25,00">
+            </div>
+
+            <div class="input-group">
+                <label for="identificador">Identificador / Descrição (Opcional):</label>
+                <input type="text" id="identificador" placeholder="Ex: Mensalidade João Silva" value="">
+            </div>
+
+            <button class="action-btn" onclick="gerarTextoPix()">Gerar Mensagem Pix</button>
+
+            <textarea id="resultadoPix" readonly></textarea>
+
+            <button class="action-btn btn-copy" onclick="copiarTexto('resultadoPix', event)">📋 Copiar Texto</button>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Direitos reservados CONNECTA PRO / WebertMaster
+    </div>
+
+    <script>
+        // Função para alternar entre as abas
+        function switchTab(tabName) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            if (tabName === 'ofertas') {
+                buttons[0].classList.add('active');
+                document.getElementById('secaoOfertas').classList.add('active');
+                gerarTextoOferta();
+            } else if (tabName === 'cobranca') {
+                buttons[1].classList.add('active');
+                document.getElementById('secaoCobranca').classList.add('active');
+                gerarTextoCobranca();
+            } else if (tabName === 'pix') {
+                buttons[2].classList.add('active');
+                document.getElementById('secaoPix').classList.add('active');
+                gerarTextoPix();
+            }
+        }
+
+        // Lógica do Gerador de Ofertas
+        function gerarTextoOferta() {
+            const valor = document.getElementById('valorPlanoOferta').value;
+            const template = `🍀LIBERADO + DE 100 MIL CONTEÚDOS🍀
+
+✔️CANAIS ✔️NOVELAS
+✔️FILMES  ✔️SÉRIES
+♾♾♾♾♾♾♾♾♾♾
+GRADE COM GRANDES VARIEDADES:
+
+✅ 🎬FAZENDA 2023
+✅ ⚽️ FOX SPORTS
+✅ 🏟 PREMIERE
+✅ ⚽️ CONMEBOL LIBERTADORES 
+✅ 💪 UFC
+✅ 🎭 HBO
+✅ 🎬 TELECINE
+✅ 📺 ABERTOS
+✅ 👶 INFANTIS
+✅ 🍿 FILMES E SÉRIES
+✅ 🏀 ESPORTES
+✅ 🇵🇹 INTERNACIONAIS
+✅ 📽 DOCUMENTÁRIOS
+✅ 📺 24HORAS
+✅ 🕍 RELIGIOSOS
+✅ 👩 NOVELAS
+✅ 🎤 NOTÍCIAS
+✅ 🔞 ADULTOS ⚠️ (OPCIONAL) ⚠️
+
+FUNCIONA EM:
+📌 SMART TV
+📌 TV BOX
+📌 TABLETS
+📌 NOTEBOOKS/MAC
+📌 COMPUTADOR
+📌 CELULAR (IOS E ANDROID)
+
+Aproveita tudo isso por apenas R$ ${valor}/mês!`;
+
+            document.getElementById('resultadoOferta').value = template;
+        }
+
+        // Lógica do Gerador de Cobrança e Renovação
+        function gerarTextoCobranca() {
+            const nome = document.getElementById('nomeCliente').value || "[Nome do Cliente]";
+            const valor = document.getElementById('valorPlanoCobranca').value;
+            const revendedor = document.getElementById('nomeRevendedor').value;
+            const tipo = document.getElementById('tipoMensagem').value;
+
+            let template = "";
+            let linhaRevendedor = "";
+
+            if (revendedor && revendedor.trim() !== "") {
+                linhaRevendedor = `\n\n👤 Revendedor/Servidor: ${revendedor}`;
+            }
+
+            if (tipo === "1") {
+                template = `🔔 AVISO DE VENCIMENTO 🔔
+
+Olá, ${nome}! Tudo bem? 
+
+Passando para lembrar que o seu acesso vence AMANHÃ! 🗓
+
+Não deixe sua programação favorita pausar. O valor para renovação é de apenas R$ ${valor}/mês.
+
+Qualquer dúvida, estamos à disposição para ajudar com o pagamento!${linhaRevendedor}`;
+
+            } else if (tipo === "2") {
+                template = `🔔 AVISO DE VENCIMENTO 🔔
+
+Olá, ${nome}! Tudo bem? 
+
+Passando para lembrar que o seu acesso vence em 2 DIAS! 🗓
+
+Para continuar curtindo mais de 100 mil conteúdos sem interrupções, o valor para renovação é de apenas R$ ${valor}/mês. 
+
+Confirme por aqui para mantermos seu acesso ativo!${linhaRevendedor}`;
+
+            } else if (tipo === "3") {
+                template = `🎉 PLANO RENOVADO COM SUCESSO! 🎉
+
+Olá, ${nome}! Tudo bem? 
+
+Passando para agradecer pela preferência e confirmar que seu acesso à Webflix foi renovado! ✅
+
+Agora é só continuar aproveitando:
+✔️ Canais, Filmes e Séries
+✔️ Conteúdos sem travamentos
+
+Qualquer dúvida ou suporte, estamos sempre à disposição. Tenha um ótimo entretenimento! 🍿📺${linhaRevendedor}`;
+            }
+
+            document.getElementById('resultadoCobranca').value = template;
+        }
+
+        // Lógica do Gerador Pix
+        function gerarTextoPix() {
+            const chave = document.getElementById('chavePix').value || "[Sua Chave Pix]";
+            const tipo = document.getElementById('tipoChave').value;
+            const nome = document.getElementById('nomeBeneficiario').value || "[Nome]";
+            const valor = document.getElementById('valorPix').value;
+            const identificador = document.getElementById('identificador').value;
+
+            let linhaIdentificador = "";
+            if (identificador && identificador.trim() !== "") {
+                linhaIdentificador = `\n📝 Descrição: ${identificador}`;
+            }
+
+            const template = `💳 DADOS PARA PAGAMENTO VIA PIX 💳
+
+Para efetuar o pagamento do seu acesso, siga as instruções abaixo:
+
+👤 Beneficiário: ${nome}
+🔑 Chave Pix: ${chave}
+🏷 Tipo de Chave: ${tipo}
+💰 Valor: R$ ${valor}${linhaIdentificador}
+
+👉 Como pagar:
+1. Abra o app do seu banco e acesse a área Pix.
+2. Selecione a opção "Pix Copia e Cola" ou use a chave acima.
+3. Verifique se o destinatário é ${nome}.
+4. Após o pagamento, envie o comprovante neste chat para a liberação do seu acesso.
+
+Obrigado pela preferência! 🍿📺`;
+
+            document.getElementById('resultadoPix').value = template;
+        }
+
+        // Função de Copiar Texto
+        function copiarTexto(elementId, event) {
+            const textarea = document.getElementById(elementId);
+            textarea.select();
+            document.execCommand('copy');
+
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = '✅ Copiado!';
+            setTimeout(() => {
+                btn.innerText = '📋 Copiar Texto';
+            }, 2000);
+        }
+
+        // Gera o texto automaticamente ao carregar
+        window.onload = function() {
+            gerarTextoOferta();
+            gerarTextoCobranca();
+            gerarTextoPix();
+        };
+    </script>
+</body>
+</html>
